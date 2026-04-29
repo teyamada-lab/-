@@ -1,0 +1,1669 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5">
+<title>MACARON RECRUIT 2026｜マカロン訪問看護リハビリステーション｜EFILa GROUP</title>
+<meta name="description" content="神奈川県内拠点数No.1。マカロン訪問看護リハビリステーションの2026年新卒・中途採用情報。急拡大中につき新メンバー大募集。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        /* Pastel base — macaron tones */
+        'pk-soft': '#FFB7D5',
+        'pk-bg':   '#FFF0F6',
+        'ye-soft': '#FFE5A0',
+        'ye-bg':   '#FFFAEB',
+        'te-soft': '#B8E6D9',
+        'te-bg':   '#E8F8F5',
+        'pu-soft': '#D4C5F9',
+        'pu-bg':   '#F4EFFC',
+        'or-soft': '#FFCCB0',
+        'cream':   '#FFF6E5',
+        /* EFILa-style vivid accents */
+        pk: '#FF2D78',
+        ye: '#FFD600',
+        te: '#00B8AE',
+        pu: '#6D5CE7',
+        or: '#FF6B2B',
+        mi: '#4ADE80',
+        dk: '#0A0612',
+        bg: '#FAFAFA',
+      },
+      fontFamily: {
+        jp: ['"Zen Kaku Gothic New"', '"Noto Sans JP"', 'sans-serif'],
+        body: ['"Noto Sans JP"', 'sans-serif'],
+        en: ['Inter', 'sans-serif'],
+      },
+      borderRadius: {
+        '4xl': '28px',
+        'pill': '100px',
+      },
+      animation: {
+        'spin-slow': 'spin 14s linear infinite',
+        'spin-rev': 'spin 22s linear infinite reverse',
+      }
+    }
+  }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:none}
+body{font-family:'Noto Sans JP',sans-serif;background:#FAFAFA;color:#0A0612;overflow-x:hidden;cursor:none}
+
+/* ── EASE & VARS ── */
+:root{
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* ── CURSOR ── */
+.cur{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;mix-blend-mode:difference}
+.cur-d{width:6px;height:6px;border-radius:50%;background:#fff;position:absolute;margin:-3px 0 0 -3px}
+.cur-r{width:44px;height:44px;border-radius:50%;border:1.5px solid #fff;position:absolute;margin:-22px 0 0 -22px;transition:width .3s var(--ease),height .3s var(--ease),margin .3s var(--ease)}
+
+/* ── LOADER ── */
+.ldr{position:fixed;inset:0;z-index:9998;background:#0A0612;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transition:opacity .8s,visibility .8s}
+.ldr.out{opacity:0;visibility:hidden;pointer-events:none}
+.ldr-logo{width:200px;opacity:0;transform:translateY(20px);transition:all .6s .2s var(--ease)}
+.ldr.go .ldr-logo{opacity:1;transform:translateY(0)}
+.ldr-bar-w{width:200px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.ldr-bar{height:100%;width:0;background:linear-gradient(90deg,#FF2D78,#FFD600,#00D4C8);transition:width 1.4s .3s var(--ease);border-radius:2px}
+.ldr.go .ldr-bar{width:100%}
+
+/* ── SCROLL REVEAL ── */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}.d4{transition-delay:.46s}.d5{transition-delay:.58s}
+
+/* ── HERO BACKGROUND (pastel macaron palette) ── */
+.hero-bg{
+  background:linear-gradient(135deg,
+    #FFB7D5 0%, #FFD4B8 18%, #FFEDA8 38%,
+    #B8E6D9 58%, #D4C5F9 78%, #FFB7D5 100%
+  );
+}
+
+/* ── HERO OVERLAY (pastel-tinted, lighter darkening) ── */
+.hero-ov{
+  background:
+    linear-gradient(to right, rgba(10,6,18,.78) 0%, rgba(10,6,18,.38) 48%, rgba(10,6,18,.02) 100%),
+    linear-gradient(to top, rgba(10,6,18,.7) 0%, transparent 46%),
+    linear-gradient(135deg, rgba(255,183,213,.32) 0%, rgba(184,230,217,.22) 50%, rgba(212,197,249,.32) 100%);
+}
+
+/* ── HORIZONTAL SCROLLING MACARON ── */
+.hmq{position:absolute;left:0;right:0;overflow:hidden;pointer-events:none;z-index:3}
+.hmq-inner{display:flex;align-items:center;gap:36px;white-space:nowrap;will-change:transform}
+.hmq-inner.tl{animation:hml 23s linear infinite}
+.hmq-inner.tr{animation:hmr 17s linear infinite}
+@keyframes hml{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes hmr{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.hmq-w{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(76px,10.5vw,144px);letter-spacing:-.04em;line-height:1;white-space:nowrap;flex-shrink:0;user-select:none}
+.hmq-s{font-family:'Inter',sans-serif;font-size:clamp(16px,1.8vw,24px);white-space:nowrap;flex-shrink:0;user-select:none}
+.r1 .hmq-w{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.11)}
+.r1 .hmq-s{color:rgba(255,255,255,.08)}
+.r2 .hmq-w{background:linear-gradient(90deg,#FF2D78,#FFD600,#00D4C8,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:.2}
+.r2 .hmq-s{color:rgba(255,214,0,.14)}
+.r3 .hmq-w{color:transparent;-webkit-text-stroke:1px rgba(0,212,200,.13)}
+.r3 .hmq-s{color:rgba(0,212,200,.09)}
+
+/* ── VERTICAL SCROLLING STRIP ── */
+.vmq{position:absolute;right:0;top:0;bottom:0;width:52px;z-index:6;overflow:hidden;display:flex;justify-content:center;border-left:1px solid rgba(255,255,255,.07);background:rgba(10,6,18,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.vmq-inner{display:flex;flex-direction:column;align-items:center;gap:18px;padding-top:18px;animation:vup 13s linear infinite;will-change:transform}
+@keyframes vup{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+.vmq-i{writing-mode:vertical-rl;font-family:'Inter',sans-serif;font-weight:900;font-size:9px;letter-spacing:.3em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.vmq-i:nth-child(12n+1){color:#FF2D78}.vmq-i:nth-child(12n+2){color:rgba(255,255,255,.18)}
+.vmq-i:nth-child(12n+3){color:#FFD600}.vmq-i:nth-child(12n+4){color:rgba(255,255,255,.18)}
+.vmq-i:nth-child(12n+5){color:#00D4C8}.vmq-i:nth-child(12n+6){color:rgba(255,255,255,.18)}
+.vmq-i:nth-child(12n+7){color:#8B5CF6}.vmq-i:nth-child(12n+8){color:rgba(255,255,255,.18)}
+.vmq-i:nth-child(12n+9){color:#FF6B2B}.vmq-i:nth-child(12n+10){color:rgba(255,255,255,.18)}
+.vmq-i:nth-child(12n+11){color:#4ADE80}.vmq-i:nth-child(12n+12){color:rgba(255,255,255,.18)}
+
+/* ── HERO CONTENT ANIMATIONS ── */
+.hero-badge{opacity:0;animation:fup .6s 1.5s var(--ease) forwards}
+.hero-bdot{animation:bpulse 2s 2.0s ease-in-out infinite}
+@keyframes bpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+
+.hero-h1 .ln{display:block;overflow:hidden}
+.hero-h1 .ln span{display:block;opacity:0;transform:translateY(100%);animation:sup .85s var(--ease) forwards}
+.hero-h1 .ln:nth-child(1) span{animation-delay:1.8s}
+.hero-h1 .ln:nth-child(2) span{animation-delay:2.0s}
+.hero-h1 em{font-style:normal;color:transparent;-webkit-text-stroke:2px #fff}
+
+.hero-big{padding-bottom:.12em;overflow:visible}
+.hero-big-txt{display:block;background:linear-gradient(135deg,#FF2D78 0%,#FFD600 50%,#00D4C8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;transform:translateY(60px);animation:sup .9s 2.4s var(--ease) forwards}
+
+.hero-pills{opacity:0;animation:fup .7s 2.7s var(--ease) forwards}
+.hero-btns{opacity:0;animation:fup .7s 2.9s var(--ease) forwards}
+.hero-bbls{opacity:0;animation:fup .9s 2.2s var(--ease) forwards}
+.hero-stats{opacity:0;animation:fup .6s 3.3s var(--ease) forwards}
+.hero-scl{opacity:0;animation:fup .6s 3.5s var(--ease) forwards}
+
+@keyframes fup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sup{to{opacity:1;transform:translateY(0)}}
+
+/* ── BUBBLES ── */
+.bbl{border-radius:50%;overflow:hidden;position:relative;border:3px solid rgba(255,255,255,.24);box-shadow:0 16px 48px rgba(0,0,0,.45);flex-shrink:0}
+.bbl video,.bbl img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.bbl-rg{position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(255,45,120,.4);animation:spin 14s linear infinite}
+.bbl-rg2{position:absolute;inset:-18px;border-radius:50%;border:1.5px dashed rgba(255,214,0,.3);animation:spin 22s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── SCROLL HINT ── */
+.scl-line{width:48px;height:1px;background:rgba(255,255,255,.18);overflow:hidden;position:relative}
+.scl-line::after{content:'';position:absolute;inset:0;background:#FF2D78;animation:scl 2s ease-in-out infinite}
+@keyframes scl{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* ── TICKER ── */
+.tk-seg{display:inline-flex;align-items:stretch;white-space:nowrap;flex-shrink:0;animation:tkl 18s linear infinite}
+@keyframes tkl{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+/* ── GRADIENT TEXT UTILITIES ── */
+.gtxt-prim{background:linear-gradient(135deg,#FF2D78 0%,#FFD600 50%,#00D4C8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gtxt-warm{background:linear-gradient(135deg,#FF2D78,#FF6B2B,#FFD600);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── REASONS NUMBERS (outline) ── */
+.r-num{color:transparent;-webkit-text-stroke:1.5px currentColor}
+
+/* ── VOICE CAROUSEL ── */
+.voice-track{display:flex;gap:24px;width:max-content;animation:vtr 30s linear infinite}
+@keyframes vtr{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── MAP ── */
+#map{width:100%;height:540px;border-radius:28px;overflow:hidden}
+.leaflet-popup-content-wrapper{border-radius:14px}
+.leaflet-popup-content{margin:14px 18px}
+
+/* ── FLOW CONNECTING LINE ── */
+.flow-grid{position:relative}
+.flow-grid::before{content:'';position:absolute;top:38px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,#FF2D78,#00D4C8,#8B5CF6,#FF6B2B);opacity:.22}
+@media(max-width:1024px){.flow-grid::before{display:none}}
+
+/* ── FLOAT BUTTON ── */
+.float-btn{opacity:0;pointer-events:none;transition:opacity .4s,transform .2s,box-shadow .2s}
+.float-btn.vis{opacity:1;pointer-events:all}
+
+/* ── HIDE SCROLLING ON MOBILE ── */
+@media(max-width:768px){
+  .vmq,.hmq,.hero-bbls{display:none}
+  .ctr-pad{padding-left:20px!important;padding-right:20px!important}
+}
+</style>
+</head>
+<body class="bg-bg text-dk font-body">
+
+<!-- ── CURSOR ── -->
+<div class="cur"><div class="cur-d"></div><div class="cur-r"></div></div>
+
+<!-- ── LOADER ── -->
+<div class="ldr" id="ldr">
+  <img class="ldr-logo" src="https://macaron-kango.com/wp-content/uploads/2025/12/logo-text-makaron.png" alt="MACARON" onerror="this.style.opacity='.3'">
+  <div class="ldr-bar-w"><div class="ldr-bar"></div></div>
+</div>
+
+<!-- ── HEADER ── -->
+<header id="hd" class="fixed top-0 left-0 w-full z-[900] flex items-center justify-between px-12 py-5 transition-all duration-400">
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pk to-or flex items-center justify-center flex-shrink-0 shadow-lg shadow-pk/40">
+      <img src="https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/common/logo.svg" alt="a" class="w-6 h-6 object-contain brightness-0 invert" onerror="this.style.display='none'">
+    </div>
+    <img class="h-8 brightness-0 invert" src="https://macaron-kango.com/wp-content/uploads/2025/12/logo-text-makaron.png" alt="マカロン" onerror="this.style.display='none'">
+    <div class="font-jp text-[11px] font-bold text-white/60 leading-tight hidden sm:block">マカロン訪問看護<br>リハビリステーション</div>
+  </div>
+  <nav class="hidden md:flex items-center gap-8">
+    <a href="#about" class="font-en text-[11px] font-semibold tracking-[.18em] text-white/45 uppercase hover:text-white transition-colors">About</a>
+    <a href="#reasons" class="font-en text-[11px] font-semibold tracking-[.18em] text-white/45 uppercase hover:text-white transition-colors">Reasons</a>
+    <a href="#benefits" class="font-en text-[11px] font-semibold tracking-[.18em] text-white/45 uppercase hover:text-white transition-colors">Benefits</a>
+    <a href="#voice" class="font-en text-[11px] font-semibold tracking-[.18em] text-white/45 uppercase hover:text-white transition-colors">Voice</a>
+    <a href="#flow" class="font-en text-[11px] font-semibold tracking-[.18em] text-white/45 uppercase hover:text-white transition-colors">Flow</a>
+  </nav>
+  <a href="https://efila.co.jp/search_recruit/entry" target="_blank" rel="noopener" class="hidden md:inline-flex bg-gradient-to-br from-pk to-or text-white px-6 py-2.5 rounded-pill font-jp text-[13px] font-bold shadow-lg shadow-pk/40 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pk/55 transition-all">今すぐ応募する</a>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero hero-bg relative overflow-hidden h-screen min-h-[700px]" id="top">
+  <video class="absolute inset-0 w-full h-full object-cover z-0" autoplay muted loop playsinline preload="auto"
+    poster="https://macaron-kango.com/wp-content/uploads/2025/12/27869154_m-1920x1232.jpg">
+    <source src="macaron-hero.mp4" type="video/mp4">
+    <source src="../OneDrive/Desktop/Macaron_Frames/Town_that_leaves_202604261433.mp4" type="video/mp4">
+    <source src="../Downloads/Town_that_leaves_202604261433.mp4" type="video/mp4">
+  </video>
+  <div class="hero-ov absolute inset-0 z-[2]"></div>
+
+  <!-- Horizontal scrolling MACARON rows -->
+  <div class="hmq r1" style="top:10%">
+    <div class="hmq-inner tl">
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">—</span>
+    </div>
+  </div>
+  <div class="hmq r2" style="top:41%">
+    <div class="hmq-inner tr">
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+      <span class="hmq-w">MACARON</span><span class="hmq-s">·</span>
+    </div>
+  </div>
+  <div class="hmq r3" style="top:70%">
+    <div class="hmq-inner tl">
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+      <span class="hmq-w">マカロン</span><span class="hmq-s">·</span>
+    </div>
+  </div>
+
+  <!-- Vertical strip -->
+  <div class="vmq">
+    <div class="vmq-inner">
+      <span class="vmq-i">MACARON</span><span class="vmq-i">·</span>
+      <span class="vmq-i">訪問看護</span><span class="vmq-i">·</span>
+      <span class="vmq-i">RECRUIT</span><span class="vmq-i">·</span>
+      <span class="vmq-i">MACARON</span><span class="vmq-i">·</span>
+      <span class="vmq-i">神奈川No.1</span><span class="vmq-i">·</span>
+      <span class="vmq-i">2026</span><span class="vmq-i">·</span>
+      <span class="vmq-i">MACARON</span><span class="vmq-i">·</span>
+      <span class="vmq-i">訪問看護</span><span class="vmq-i">·</span>
+      <span class="vmq-i">RECRUIT</span><span class="vmq-i">·</span>
+      <span class="vmq-i">MACARON</span><span class="vmq-i">·</span>
+      <span class="vmq-i">神奈川No.1</span><span class="vmq-i">·</span>
+      <span class="vmq-i">2026</span><span class="vmq-i">·</span>
+    </div>
+  </div>
+
+  <!-- Hero content -->
+  <div class="absolute inset-0 z-[4] flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-18 pt-28 pb-44 max-w-[700px] ctr-pad">
+    <div class="hero-badge inline-flex items-center gap-2 border border-white/20 rounded-pill px-4 py-1.5 bg-white/[.07] backdrop-blur-md mb-7 self-start">
+      <div class="hero-bdot w-1.5 h-1.5 rounded-full bg-pk flex-shrink-0"></div>
+      <span class="font-en text-[11px] font-semibold tracking-[.2em] text-white/75 uppercase">EFILa GROUP — Recruit 2026</span>
+    </div>
+    <h1 class="hero-h1 mb-2">
+      <div class="ln"><span class="block font-jp font-black text-white leading-[1.18] tracking-tight" style="font-size:clamp(32px,4.8vw,62px)">急拡大中につき</span></div>
+      <div class="ln"><span class="block font-jp font-black text-white leading-[1.18] tracking-tight" style="font-size:clamp(32px,4.8vw,62px)">新メンバー<em>大募集</em></span></div>
+    </h1>
+    <div class="hero-big font-jp font-black leading-[1.05] tracking-tight mb-7" style="font-size:clamp(54px,8.5vw,114px)">
+      <span class="hero-big-txt">神奈川No.1</span>
+    </div>
+    <div class="hero-pills flex flex-wrap gap-2 mb-9">
+      <span class="font-jp text-xs font-medium px-[18px] py-1.5 rounded-pill border border-white/25 text-white/90 bg-white/[.07] backdrop-blur-md">神奈川県内 全25拠点</span>
+      <span class="font-jp text-xs font-medium px-[18px] py-1.5 rounded-pill border border-white/25 text-white/90 bg-white/[.07] backdrop-blur-md">キャリアアップ多数</span>
+      <span class="font-jp text-xs font-medium px-[18px] py-1.5 rounded-pill border border-white/25 text-white/90 bg-white/[.07] backdrop-blur-md">EFILaグループ</span>
+    </div>
+    <div class="hero-btns flex gap-3.5 flex-wrap">
+      <a href="https://efila.co.jp/search_recruit/entry" target="_blank" rel="noopener" class="inline-flex items-center bg-gradient-to-br from-pk to-or text-white px-10 py-4 rounded-pill font-jp font-bold text-[15px] tracking-wide shadow-lg shadow-pk/40 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pk/55 transition-all">今すぐエントリーする</a>
+      <a href="https://efila.co.jp/recruit_top/" target="_blank" rel="noopener" class="inline-flex items-center border border-white/35 rounded-pill text-white/85 px-9 py-[15px] font-jp font-semibold text-sm hover:bg-white/[.08] hover:border-white/60 transition-colors">詳細を見る</a>
+    </div>
+  </div>
+
+  <!-- Right: circular video bubbles -->
+  <a href="https://www.instagram.com/macaron_houkan/" target="_blank" rel="noopener" class="hero-bbls absolute right-20 top-1/2 -translate-y-1/2 z-[4] flex flex-col gap-5 items-center hidden md:flex group" aria-label="マカロン公式Instagramを見る">
+    <!-- Main Instagram banner -->
+    <div class="bbl w-[210px] h-[210px] flex flex-col items-center justify-center text-white relative group-hover:scale-[1.04] transition-transform duration-300"
+         style="background:linear-gradient(135deg,#FFD600 0%,#FF6B2B 22%,#FF2D78 50%,#8B5CF6 78%,#6D5CE7 100%)">
+      <div class="bbl-rg"></div>
+      <div class="bbl-rg2"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-14 h-14 mb-2 drop-shadow-lg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+      <div class="font-en text-[11px] font-black tracking-[.25em] mt-1">FOLLOW US</div>
+      <div class="font-en text-[10px] font-semibold tracking-widest text-white/85 mt-1">@macaron_houkan</div>
+    </div>
+  </a>
+
+  <!-- Bottom stats bar -->
+  <div class="hero-stats absolute bottom-0 left-0 right-0 z-[5] flex flex-wrap bg-dk/70 backdrop-blur-xl border-t border-white/10">
+    <div class="flex-1 min-w-[50%] sm:min-w-0 px-4 sm:px-7 py-4 text-center border-r border-white/10 sm:border-b-0 border-b">
+      <div class="font-en font-black text-white text-[26px] leading-none">No<b class="text-pk text-[17px]">.1</b></div>
+      <div class="text-[10px] text-white/40 mt-1 tracking-wider">神奈川県内 訪問看護 拠点数</div>
+    </div>
+    <div class="flex-1 min-w-[50%] sm:min-w-0 px-4 sm:px-7 py-4 text-center border-r border-white/10 sm:border-b-0 border-b">
+      <div class="font-en font-black text-white text-[26px] leading-none">25<b class="text-pk text-[17px]">拠点</b></div>
+      <div class="text-[10px] text-white/40 mt-1 tracking-wider">神奈川県全域に展開</div>
+    </div>
+    <div class="flex-1 min-w-[50%] sm:min-w-0 px-4 sm:px-7 py-4 text-center border-r border-white/10">
+      <div class="font-en font-black text-white text-[26px] leading-none"><span class="js-cnt" data-t="3000">0</span><b class="text-pk text-[17px]">名+</b></div>
+      <div class="text-[10px] text-white/40 mt-1 tracking-wider">EFILaグループ 総従業員数</div>
+    </div>
+    <div class="flex-1 min-w-[50%] sm:min-w-0 px-4 sm:px-7 py-4 text-center">
+      <div class="font-en font-black text-white text-[26px] leading-none">24<b class="text-pk text-[17px]">H</b></div>
+      <div class="text-[10px] text-white/40 mt-1 tracking-wider">緊急対応体制</div>
+    </div>
+  </div>
+
+  <div class="hero-scl absolute left-6 sm:left-16 bottom-32 sm:bottom-24 z-[5] flex items-center gap-3">
+    <div class="scl-line"></div>
+    <span class="font-en text-[10px] tracking-widest text-white/35 uppercase">Scroll</span>
+  </div>
+</section>
+
+<!-- ══ TICKER ══ -->
+<div class="overflow-hidden flex bg-dk">
+  <div class="tk-seg bg-pk text-dk">
+    <div class="inline-flex items-center gap-5 px-7 py-3 font-en text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>MACARON NURSING</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>神奈川No.1</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>25 STATIONS</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>急拡大中</span>
+    </div>
+  </div>
+  <div class="tk-seg bg-te text-dk">
+    <div class="inline-flex items-center gap-5 px-7 py-3 font-en text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>CAREER UP</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>NEW MEMBER WANTED</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>EFILa GROUP</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>3,000名+</span>
+    </div>
+  </div>
+  <div class="tk-seg bg-ye text-dk">
+    <div class="inline-flex items-center gap-5 px-7 py-3 font-en text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>MACARON NURSING</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>神奈川No.1</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>25 STATIONS</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>急拡大中</span>
+    </div>
+  </div>
+  <div class="tk-seg bg-pu text-white">
+    <div class="inline-flex items-center gap-5 px-7 py-3 font-en text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span><span>CAREER UP</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span><span>NEW MEMBER WANTED</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span><span>EFILa GROUP</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-white"></span><span>3,000名+</span>
+    </div>
+  </div>
+  <!-- duplicates for seamless -->
+  <div class="tk-seg bg-pk text-dk">
+    <div class="inline-flex items-center gap-5 px-7 py-3 font-en text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>MACARON NURSING</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>神奈川No.1</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>25 STATIONS</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>急拡大中</span>
+    </div>
+  </div>
+  <div class="tk-seg bg-te text-dk">
+    <div class="inline-flex items-center gap-5 px-7 py-3 font-en text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>CAREER UP</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>NEW MEMBER WANTED</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>EFILa GROUP</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-dk"></span><span>3,000名+</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATS ══ -->
+<section class="py-24 bg-white">
+  <div class="max-w-[1200px] mx-auto px-12 ctr-pad">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0.5 rounded-4xl overflow-hidden">
+      <div class="rv bg-white p-12 sm:p-14 text-center relative overflow-hidden hover:-translate-y-1 transition-transform duration-300 group" style="box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)">
+        <div class="font-en font-black leading-none text-dk" style="font-size:clamp(40px,5.5vw,68px)"><span class="text-[.44em]">No</span>.1</div>
+        <div class="text-[13px] text-gray-500 mt-3 tracking-wide">神奈川県内 訪問看護 拠点数</div>
+        <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-pk scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
+      </div>
+      <div class="rv d1 bg-white p-12 sm:p-14 text-center relative overflow-hidden hover:-translate-y-1 transition-transform duration-300 group" style="box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)">
+        <div class="font-en font-black leading-none text-dk" style="font-size:clamp(40px,5.5vw,68px)"><span class="js-cnt" data-t="25">0</span><span class="text-[.36em] text-pk">拠点</span></div>
+        <div class="text-[13px] text-gray-500 mt-3 tracking-wide">神奈川県全域に展開中</div>
+        <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-ye scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
+      </div>
+      <div class="rv d2 bg-white p-12 sm:p-14 text-center relative overflow-hidden hover:-translate-y-1 transition-transform duration-300 group" style="box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)">
+        <div class="font-en font-black leading-none text-dk" style="font-size:clamp(40px,5.5vw,68px)"><span class="js-cnt" data-t="3000">0</span><span class="text-[.36em] text-pk">名+</span></div>
+        <div class="text-[13px] text-gray-500 mt-3 tracking-wide">EFILaグループ 総従業員数</div>
+        <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-te scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT / MANIFESTO ══ -->
+<section class="py-32 bg-gradient-to-br from-pk-bg via-pu-bg to-te-bg relative overflow-hidden" id="about">
+  <!-- Decorative blurs -->
+  <div class="absolute -top-40 -right-32 w-[500px] h-[500px] rounded-full bg-pk/[.12] blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-32 w-[600px] h-[600px] rounded-full bg-pu/[.1] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-[1200px] mx-auto px-12 ctr-pad relative">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div>
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-6">Our Mission &amp; Vision</span>
+
+        <!-- MISSION badge — now on glass card -->
+        <div class="rv d1 mb-4 bg-white/70 backdrop-blur rounded-3xl p-6 lg:p-7 border border-pk/15 shadow-lg shadow-pk/[.08]">
+          <div class="flex items-baseline gap-3 mb-2">
+            <span class="font-en text-[10px] font-bold tracking-[.28em] text-pk">MISSION</span>
+            <span class="font-en text-[9px] tracking-widest text-gray-400">EFILa GROUP</span>
+          </div>
+          <div class="font-jp font-black text-dk leading-tight" style="font-size:clamp(28px,3.6vw,42px)">「<span class="gtxt-warm">生ききる</span>。」</div>
+          <p class="text-[13px] text-gray-600 mt-2 leading-relaxed">一人ひとりが与えられた人生を全うすること。<br>困難に立ち向かう人たちの、力になりたい。</p>
+        </div>
+
+        <!-- VISION badge -->
+        <div class="rv d2 mb-8 bg-white/70 backdrop-blur rounded-3xl p-6 lg:p-7 border border-te/15 shadow-lg shadow-te/[.08]">
+          <div class="flex items-baseline gap-3 mb-2">
+            <span class="font-en text-[10px] font-bold tracking-[.28em] text-te">VISION</span>
+          </div>
+          <div class="font-jp font-bold text-dk leading-tight" style="font-size:clamp(18px,2.2vw,24px)">誰ひとり取り残さない街を、つくる。</div>
+          <p class="text-[13px] text-gray-600 mt-2 leading-relaxed">どんな環境・障がい・病気であっても、好きな場所で<br>安心して生涯を終えられる街づくりを。</p>
+        </div>
+
+        <h2 class="rv d3 font-jp font-black text-dk leading-[1.05] tracking-tight mb-6" style="font-size:clamp(36px,5vw,68px)">
+          <span class="block">なんでも、</span>
+          <span class="block gtxt-prim">マカロン。</span>
+        </h2>
+        <p class="rv d4 text-[15px] leading-[1.88] text-gray-600 font-light mb-9">
+          24時間365日、神奈川県内25拠点で。<br>
+          精神科・小児・看取り・喀痰吸引まで、<b class="text-dk">「なんでも」対応する力。</b><br>
+          それが、私たちの誇りであり、患者さんの安心です。<br><br>
+          一緒に、訪問看護の未来を塗り替えませんか。
+        </p>
+        <a href="https://efila.co.jp/recruit_top/" target="_blank" rel="noopener" class="rv d5 inline-flex items-center bg-gradient-to-br from-pk to-or text-white px-10 py-4 rounded-pill font-jp font-black text-[15px] tracking-wide shadow-xl shadow-pk/30 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-pk/45 transition-all">EFILa公式サイトを見る</a>
+      </div>
+      <div class="rv d2 rounded-4xl overflow-hidden shadow-2xl shadow-pk/10 relative">
+        <img src="https://macaron-kango.com/wp-content/uploads/2025/12/27869154_m-1920x1232.jpg"
+             class="w-full h-[360px] lg:h-[520px] object-cover object-center"
+             alt="マカロン訪問看護"
+             onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-talk.png'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REASONS ══ -->
+<section id="reasons">
+  <div class="text-center px-12 pt-24 pb-16 ctr-pad">
+    <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-4">Why Macaron</span>
+    <h2 class="rv d1 font-jp font-black leading-[1.18] tracking-tight text-dk" style="font-size:clamp(30px,4.2vw,54px)">マカロンを選ぶ3つの理由</h2>
+  </div>
+
+  <!-- Reason 01: 拠点数No.1の安定性と信頼 -->
+  <div class="grid lg:grid-cols-[48%_52%] min-h-[500px] mb-1 bg-[#FFF0F8]">
+    <div class="rv overflow-hidden order-1 lg:order-1 relative">
+      <!-- Big "25" badge -->
+      <div class="absolute bottom-6 left-6 z-10">
+        <div class="bg-gradient-to-br from-pk to-or text-white rounded-2xl px-4 py-3 shadow-xl shadow-pk/30">
+          <div class="font-en text-[8px] font-bold tracking-[.25em] text-white/85 uppercase">Stations</div>
+          <div class="font-en font-black leading-none flex items-baseline gap-0.5"><span style="font-size:32px">25</span><span class="text-[14px]">+5</span></div>
+          <div class="font-jp text-[9px] text-white/85 mt-0.5">神奈川県</div>
+        </div>
+      </div>
+      <!-- Reason01 photo -->
+      <img src="https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-talk.png"
+           class="w-full h-full object-cover object-center"
+           alt="マカロン訪問看護 拠点数No.1"
+           onerror="this.src='https://macaron-kango.com/wp-content/uploads/2025/12/22673389_m-1920x1232.jpg'">
+    </div>
+    <div class="px-8 sm:px-12 lg:px-18 py-12 lg:py-16 flex flex-col justify-center order-2 lg:order-2">
+      <div class="rv r-num text-pk font-en font-black leading-[.9] mb-5" style="font-size:76px">01</div>
+      <span class="rv d1 block font-en text-[10px] font-bold tracking-[.2em] uppercase text-pk mb-3">No.1 Station</span>
+      <h3 class="rv d2 font-jp font-black leading-[1.25] mb-5" style="font-size:clamp(22px,2.8vw,34px)">拠点数No.1の<br>安定性と信頼</h3>
+      <p class="rv d3 text-sm leading-[1.88] text-gray-500 font-light max-w-[440px]">
+        神奈川県全域に25拠点を展開し、県内最多の訪問看護ステーションを運営。<br>
+        大きな組織だからこその研修体制・キャリアパス・チームワーク。<br>
+        あなたの生活圏で、地域に深く根を張りながら働けます。
+      </p>
+    </div>
+  </div>
+
+  <!-- Reason 02: 急成長企業だからこそ得られる「挑戦」と「報酬」 -->
+  <div class="grid lg:grid-cols-[52%_48%] min-h-[500px] mb-1 bg-[#F0FFFE]">
+    <div class="px-8 sm:px-12 lg:px-18 py-12 lg:py-16 flex flex-col justify-center order-2 lg:order-1">
+      <div class="rv r-num text-te font-en font-black leading-[.9] mb-5" style="font-size:76px">02</div>
+      <span class="rv d1 block font-en text-[10px] font-bold tracking-[.2em] uppercase text-te mb-3">Growth & Reward</span>
+      <h3 class="rv d2 font-jp font-black leading-[1.25] mb-5" style="font-size:clamp(22px,2.8vw,34px)">急成長企業だからこその<br>「挑戦」と「報酬」</h3>
+      <p class="rv d3 text-sm leading-[1.88] text-gray-500 font-light max-w-[440px]">
+        年々急成長を続けるマカロンでは、新拠点開設が相次いでいます。<br>
+        スタッフ→リーダー→管理者へのスピード昇格が現実のもの。<br>
+        あなたの努力は、報酬とポジションで確実に報われます。
+      </p>
+    </div>
+    <div class="rv overflow-hidden order-1 lg:order-2">
+      <img src="https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-family.png" class="w-full h-full object-cover" style="object-position:top center"
+           alt="急成長"
+           onerror="this.src='https://macaron-kango.com/wp-content/uploads/2025/12/22673389_m-1920x1232.jpg'">
+    </div>
+  </div>
+
+  <!-- Reason 03: 多彩なキャリアパス -->
+  <div class="grid lg:grid-cols-[48%_52%] min-h-[500px] bg-[#F7F0FF]">
+    <div class="rv overflow-hidden order-1">
+      <img src="https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-staff.png" class="w-full h-full object-cover object-center"
+           alt="キャリアパス・専門職として活躍する看護師"
+           onerror="this.src='https://macaron-kango.com/wp-content/uploads/2025/12/24641645_m-1920x1232.jpg'">
+    </div>
+    <div class="px-8 sm:px-12 lg:px-18 py-12 lg:py-16 flex flex-col justify-center order-2">
+      <div class="rv r-num text-pu font-en font-black leading-[.9] mb-5" style="font-size:76px">03</div>
+      <span class="rv d1 block font-en text-[10px] font-bold tracking-[.2em] uppercase text-pu mb-3">Career Path</span>
+      <h3 class="rv d2 font-jp font-black leading-[1.25] mb-5" style="font-size:clamp(22px,2.8vw,34px)">多彩なキャリアパス<br>FA制度で道は無限大</h3>
+      <p class="rv d3 text-sm leading-[1.88] text-gray-500 font-light max-w-[440px] mb-5">
+        メンバー → ユニット長 → 拠点長 → 兼任拠点長 → ブロック長。<br>
+        社歴問わず、誰にでもキャリアアップのチャンス。<br>
+        さらに <b class="text-pu">FA制度</b> でグループ内の特養・デイ・保育等への異動も可能です。
+      </p>
+      <!-- Career ladder visual -->
+      <div class="rv d4 flex flex-wrap items-center gap-1.5 max-w-[440px]">
+        <span class="font-en text-[10px] font-bold px-3 py-1.5 rounded-full bg-pu/15 text-pu">メンバー</span>
+        <span class="text-pu/40 text-xs">→</span>
+        <span class="font-en text-[10px] font-bold px-3 py-1.5 rounded-full bg-pk/15 text-pk">ユニット長</span>
+        <span class="text-pu/40 text-xs">→</span>
+        <span class="font-en text-[10px] font-bold px-3 py-1.5 rounded-full bg-pu/15 text-pu">拠点長</span>
+        <span class="text-pu/40 text-xs">→</span>
+        <span class="font-en text-[10px] font-bold px-3 py-1.5 rounded-full bg-pk/15 text-pk">兼任拠点長</span>
+        <span class="text-pu/40 text-xs">→</span>
+        <span class="font-en text-[10px] font-bold px-3 py-1.5 rounded-full bg-pu/15 text-pu">ブロック長</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ なんでもマカロン CAPABILITIES ══ -->
+<section class="py-32 bg-white relative overflow-hidden">
+  <!-- Decorative blurs -->
+  <div class="absolute top-32 -right-40 w-[500px] h-[500px] rounded-full bg-pk/[.04] blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-32 -left-40 w-[600px] h-[600px] rounded-full bg-pu/[.05] blur-3xl pointer-events-none"></div>
+  <!-- Decorative floating MACARON text -->
+  <div class="absolute top-12 left-0 right-0 overflow-hidden pointer-events-none opacity-[.04]">
+    <div class="hmq-inner tl whitespace-nowrap" style="animation:hml 32s linear infinite">
+      <span class="font-en font-black tracking-tight" style="font-size:clamp(80px,10vw,140px);line-height:1">CAPABILITY · CAPABILITY · CAPABILITY · CAPABILITY · CAPABILITY · CAPABILITY · </span>
+    </div>
+  </div>
+
+  <div class="max-w-[1200px] mx-auto px-12 ctr-pad relative">
+    <!-- Asymmetric split header (EFILa style) -->
+    <div class="grid lg:grid-cols-[1.1fr_1fr] items-end gap-10 lg:gap-16 mb-20">
+      <div>
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-5">What Macaron Can Do</span>
+        <h2 class="rv d1 font-jp font-black leading-[1.05] tracking-tight text-dk" style="font-size:clamp(38px,5.5vw,80px)">
+          <span class="block">「なんでも</span>
+          <span class="block gtxt-warm">マカロン」</span>
+          <span class="block">出来ること。</span>
+        </h2>
+      </div>
+      <div class="lg:pb-4">
+        <div class="w-12 h-1 bg-gradient-to-r from-pk to-or rounded-full mb-5 rv d2"></div>
+        <p class="rv d2 text-[15px] leading-[1.88] text-gray-500 font-light">
+          他社では断られるケースも、<br>
+          <b class="text-dk">マカロンなら対応できる。</b><br>
+          その圧倒的な対応力こそが、<br>
+          神奈川県内No.1の信頼を支えています。
+        </p>
+      </div>
+    </div>
+
+    <!-- Capability cards — bordered grid with big numbers -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-gradient-to-br from-pk/40 via-pu/30 to-te/30 rounded-4xl overflow-hidden">
+      <!-- 01 -->
+      <div class="rv bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-pk-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-pk/[.08] group-hover:text-pk/25 transition-all duration-500" style="font-size:140px">01</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-pk uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">神奈川県内25拠点<br>24h 365日体制</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">夜間・休日も含めた完全な体制で、地域の医療を切れ目なく支えます。</p>
+          <div class="w-8 h-0.5 bg-pk mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 02 -->
+      <div class="rv d1 bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-or-soft/20">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-or/[.08] group-hover:text-or/25 transition-all duration-500" style="font-size:140px">02</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-or uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">土日祝日も<br>毎日訪問可能</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">365日いつでも、ご家族・ご本人のニーズに応えられる柔軟な訪問体制。</p>
+          <div class="w-8 h-0.5 bg-or mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 03 -->
+      <div class="rv d2 bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-te-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-te/[.08] group-hover:text-te/25 transition-all duration-500" style="font-size:140px">03</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-te uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">精神科・小児<br>専門対応可能</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">専門スタッフが在籍し、複雑なケースにも対応。多様な看護を経験できます。</p>
+          <div class="w-8 h-0.5 bg-te mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 04 -->
+      <div class="rv d3 bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-pu-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-pu/[.08] group-hover:text-pu/25 transition-all duration-500" style="font-size:140px">04</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-pu uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">医療度の高い<br>特指示・看取り対応</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">最後まで「その人らしく」を支える看取りケア。やりがいの大きな仕事です。</p>
+          <div class="w-8 h-0.5 bg-pu mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 05 -->
+      <div class="rv bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-ye-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-ye/[.18] group-hover:text-ye/40 transition-all duration-500" style="font-size:140px">05</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest uppercase" style="color:#a08000">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">労災指定<br>自費訪問にも対応</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">保険適用外のケースもカバー。あらゆる依頼に応えられる体制を整備。</p>
+          <div class="w-8 h-0.5 bg-ye mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 06 -->
+      <div class="rv d1 bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-te-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-te/[.08] group-hover:text-te/25 transition-all duration-500" style="font-size:140px">06</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-te uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">ST多数在籍<br>喀痰吸引も全リハ対応</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">言語聴覚士も多数在籍。喀痰吸引まで全リハスタッフが対応可能。</p>
+          <div class="w-8 h-0.5 bg-te mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 07 -->
+      <div class="rv d2 bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-pk-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-pk/[.08] group-hover:text-pk/25 transition-all duration-500" style="font-size:140px">07</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-pk uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">医療機関との<br>連携先多数</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">病院・クリニック・ケアマネとの強固な連携網。安心して任される存在に。</p>
+          <div class="w-8 h-0.5 bg-pk mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+      <!-- 08 -->
+      <div class="rv d3 bg-white p-8 lg:p-10 group cursor-pointer relative overflow-hidden transition-colors duration-500 hover:bg-pu-bg">
+        <div class="absolute -top-2 -right-3 font-en font-black leading-none text-pu/[.08] group-hover:text-pu/25 transition-all duration-500" style="font-size:140px">08</div>
+        <div class="relative z-10">
+          <span class="font-en text-[10px] font-bold tracking-widest text-pu uppercase">Capability</span>
+          <h3 class="font-jp font-bold text-[18px] text-dk leading-[1.4] mt-3 mb-3">充実の<br>研修・教育体制</h3>
+          <p class="text-[12px] text-gray-500 leading-[1.7]">入社後の手厚いOJT・社内研修・資格取得支援で着実にスキルアップ。</p>
+          <div class="w-8 h-0.5 bg-pu mt-5 group-hover:w-16 transition-all duration-500"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BENEFITS ══ -->
+<section class="py-32 bg-gradient-to-br from-[#FFF0F8] via-[#F0FCFF] to-[#F5F0FF] relative overflow-hidden" id="benefits">
+  <div class="absolute -top-40 right-0 w-[500px] h-[500px] rounded-full bg-pk/[.05] blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-20 w-[600px] h-[600px] rounded-full bg-pu/[.06] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-[1240px] mx-auto px-12 ctr-pad relative">
+    <!-- Asymmetric header -->
+    <div class="grid lg:grid-cols-[1fr_1fr] items-end gap-10 lg:gap-16 mb-20">
+      <div>
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-5">Benefits &amp; Welfare</span>
+        <h2 class="rv d1 font-jp font-black leading-[1.05] tracking-tight text-dk" style="font-size:clamp(38px,5.5vw,80px)">
+          <span class="block">業界最高水準の</span>
+          <span class="block gtxt-prim">福利厚生。</span>
+        </h2>
+      </div>
+      <div class="lg:pb-4">
+        <div class="w-12 h-1 bg-gradient-to-r from-pk to-or rounded-full mb-5 rv d2"></div>
+        <p class="rv d2 text-[15px] leading-[1.88] text-gray-600 font-light">
+          EFILaグループは、スタッフ一人ひとりが<br>
+          <b class="text-dk">長く、いきいきと活躍できる環境</b>のために<br>
+          多彩な制度で全力サポートします。
+        </p>
+      </div>
+    </div>
+
+    <!-- 6 category cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01 Career -->
+      <div class="rv bg-white rounded-4xl p-8 lg:p-9 shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pk to-or"></div>
+        <div class="absolute -top-3 -right-2 font-en font-black leading-none text-pk/[.06] group-hover:text-pk/15 transition-colors duration-500" style="font-size:120px">01</div>
+        <div class="relative">
+          <span class="font-en text-[10px] font-bold tracking-[.25em] text-pk uppercase">Career &amp; Growth</span>
+          <h3 class="font-jp font-bold text-[20px] text-dk mt-2 mb-5 leading-tight">キャリア・成長支援</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-2.5"><span class="text-pk text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">資格取得支援制度</b><div class="text-[11px] text-gray-500 leading-relaxed">資格・研修費用を全額/一部会社負担</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pk text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">研修費付与</b><div class="text-[11px] text-gray-500 leading-relaxed">業務に必要な研修参加費を申請補助</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pk text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">キャリアコース選択制度</b><div class="text-[11px] text-gray-500 leading-relaxed">マネジメント/専門/通常から選択可能</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pk text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">FA制度（グループ内転職）</b><div class="text-[11px] text-gray-500 leading-relaxed">ライフステージに応じた異動歓迎（年間13名利用）</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pk text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">社内公募・社内留学制度</b><div class="text-[11px] text-gray-500 leading-relaxed">グループ内の自発的キャリア形成</div></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 02 Income -->
+      <div class="rv d1 bg-white rounded-4xl p-8 lg:p-9 shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-or to-ye"></div>
+        <div class="absolute -top-3 -right-2 font-en font-black leading-none text-or/[.08] group-hover:text-or/20 transition-colors duration-500" style="font-size:120px">02</div>
+        <div class="relative">
+          <span class="font-en text-[10px] font-bold tracking-[.25em] text-or uppercase">Income &amp; Rewards</span>
+          <h3 class="font-jp font-bold text-[20px] text-dk mt-2 mb-5 leading-tight">収入・報奨制度</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-2.5"><span class="text-or text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">年2回昇給・業績連動賞与</b><div class="text-[11px] text-gray-500 leading-relaxed">成果に基づく報酬で正しく評価</div></div></li>
+            <li class="flex gap-2.5"><span class="text-or text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">入社お祝い金制度</b><div class="text-[11px] text-gray-500 leading-relaxed">初入社時の報奨金支給</div></div></li>
+            <li class="flex gap-2.5"><span class="text-or text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">各種手当が充実</b><div class="text-[11px] text-gray-500 leading-relaxed">役職・資格・時間外・メンター・SV手当</div></div></li>
+            <li class="flex gap-2.5"><span class="text-or text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">結婚・出産祝い金</b><div class="text-[11px] text-gray-500 leading-relaxed">人生の節目を会社からも祝福</div></div></li>
+            <li class="flex gap-2.5"><span class="text-or text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">永年勤続手当・退職金</b><div class="text-[11px] text-gray-500 leading-relaxed">長く働く仲間への手厚い還元</div></div></li>
+            <li class="flex gap-2.5"><span class="text-or text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">業務改善提案報奨金</b><div class="text-[11px] text-gray-500 leading-relaxed">採否問わずアイデアに報奨</div></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 03 Leave -->
+      <div class="rv d2 bg-white rounded-4xl p-8 lg:p-9 shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-ye to-pk"></div>
+        <div class="absolute -top-3 -right-2 font-en font-black leading-none text-ye/[.18] group-hover:text-ye/40 transition-colors duration-500" style="font-size:120px">03</div>
+        <div class="relative">
+          <span class="font-en text-[10px] font-bold tracking-[.25em] uppercase" style="color:#a08000">Leave &amp; Holidays</span>
+          <h3 class="font-jp font-bold text-[20px] text-dk mt-2 mb-5 leading-tight">休暇・休業制度</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-2.5"><span class="text-ye text-[10px] mt-1.5" style="color:#d4a000">●</span><div><b class="font-jp text-[13px] text-dk">育休・産休（取得実績多数）</b><div class="text-[11px] text-gray-500 leading-relaxed">復帰後の時短勤務もサポート</div></div></li>
+            <li class="flex gap-2.5"><span class="text-ye text-[10px] mt-1.5" style="color:#d4a000">●</span><div><b class="font-jp text-[13px] text-dk">バースデー休暇</b><div class="text-[11px] text-gray-500 leading-relaxed">年1日、誕生日月にお休み</div></div></li>
+            <li class="flex gap-2.5"><span class="text-ye text-[10px] mt-1.5" style="color:#d4a000">●</span><div><b class="font-jp text-[13px] text-dk">家族サービス休暇</b><div class="text-[11px] text-gray-500 leading-relaxed">年1日、大切な家族との時間に</div></div></li>
+            <li class="flex gap-2.5"><span class="text-ye text-[10px] mt-1.5" style="color:#d4a000">●</span><div><b class="font-jp text-[13px] text-dk">副業OK</b><div class="text-[11px] text-gray-500 leading-relaxed">申請で正社員もダブルワーク可能</div></div></li>
+            <li class="flex gap-2.5"><span class="text-ye text-[10px] mt-1.5" style="color:#d4a000">●</span><div><b class="font-jp text-[13px] text-dk">神奈川県外転勤なし</b><div class="text-[11px] text-gray-500 leading-relaxed">生活基盤を安定させて長く働ける</div></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 04 Family -->
+      <div class="rv bg-white rounded-4xl p-8 lg:p-9 shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pu to-pk"></div>
+        <div class="absolute -top-3 -right-2 font-en font-black leading-none text-pu/[.07] group-hover:text-pu/20 transition-colors duration-500" style="font-size:120px">04</div>
+        <div class="relative">
+          <span class="font-en text-[10px] font-bold tracking-[.25em] text-pu uppercase">Family Support</span>
+          <h3 class="font-jp font-bold text-[20px] text-dk mt-2 mb-5 leading-tight">家族・暮らしサポート</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-2.5"><span class="text-pu text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">自社保育園の<u class="decoration-pk underline-offset-2">無料</u>利用</b><div class="text-[11px] text-gray-500 leading-relaxed">パート・アルバイトも対象（70名以上利用中）</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pu text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">交通費 全額支給</b><div class="text-[11px] text-gray-500 leading-relaxed">マイカー通勤も歓迎</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pu text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">運転免許取得補助</b><div class="text-[11px] text-gray-500 leading-relaxed">運転業務配属者向けの取得支援</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pu text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">ペーパードライバー研修</b><div class="text-[11px] text-gray-500 leading-relaxed">運転に不安がある方も実践研修で安心</div></div></li>
+            <li class="flex gap-2.5"><span class="text-pu text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">遠方採用者引越費用負担</b><div class="text-[11px] text-gray-500 leading-relaxed">転居費用の一部を会社負担</div></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 05 Health -->
+      <div class="rv d1 bg-white rounded-4xl p-8 lg:p-9 shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-te to-mi"></div>
+        <div class="absolute -top-3 -right-2 font-en font-black leading-none text-te/[.07] group-hover:text-te/20 transition-colors duration-500" style="font-size:120px">05</div>
+        <div class="relative">
+          <span class="font-en text-[10px] font-bold tracking-[.25em] text-te uppercase">Health &amp; Care</span>
+          <h3 class="font-jp font-bold text-[20px] text-dk mt-2 mb-5 leading-tight">健康・サポート体制</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-2.5"><span class="text-te text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">メンター制度</b><div class="text-[11px] text-gray-500 leading-relaxed">新卒1年・中途3ヶ月の専属サポート</div></div></li>
+            <li class="flex gap-2.5"><span class="text-te text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">職場相談窓口</b><div class="text-[11px] text-gray-500 leading-relaxed">年間延べ200名以上と個別面談を実施</div></div></li>
+            <li class="flex gap-2.5"><span class="text-te text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">ハラスメント相談窓口</b><div class="text-[11px] text-gray-500 leading-relaxed">受付体制を整備、違反時は厳重処分</div></div></li>
+            <li class="flex gap-2.5"><span class="text-te text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">健康診断（会社負担）</b><div class="text-[11px] text-gray-500 leading-relaxed">年1回、全額会社負担で実施</div></div></li>
+            <li class="flex gap-2.5"><span class="text-te text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">インフル予防接種補助</b><div class="text-[11px] text-gray-500 leading-relaxed">対象事業所での費用補助あり</div></div></li>
+            <li class="flex gap-2.5"><span class="text-te text-[10px] mt-1.5">●</span><div><b class="font-jp text-[13px] text-dk">全社禁煙</b><div class="text-[11px] text-gray-500 leading-relaxed">健康増進と生産性向上のために</div></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 06 Community -->
+      <div class="rv d2 bg-white rounded-4xl p-8 lg:p-9 shadow-md hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 relative overflow-hidden group">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-mi to-te"></div>
+        <div class="absolute -top-3 -right-2 font-en font-black leading-none text-mi/[.1] group-hover:text-mi/25 transition-colors duration-500" style="font-size:120px">06</div>
+        <div class="relative">
+          <span class="font-en text-[10px] font-bold tracking-[.25em] text-mi uppercase" style="color:#3a9d62">Community</span>
+          <h3 class="font-jp font-bold text-[20px] text-dk mt-2 mb-5 leading-tight">コミュニティ・福利</h3>
+          <ul class="space-y-3">
+            <li class="flex gap-2.5"><span class="text-mi text-[10px] mt-1.5" style="color:#3a9d62">●</span><div><b class="font-jp text-[13px] text-dk">サークル活動支援</b><div class="text-[11px] text-gray-500 leading-relaxed">好きなテーマで自由に設立、会社補助あり</div></div></li>
+            <li class="flex gap-2.5"><span class="text-mi text-[10px] mt-1.5" style="color:#3a9d62">●</span><div><b class="font-jp text-[13px] text-dk">コミュニケーション費補助</b><div class="text-[11px] text-gray-500 leading-relaxed">交流飲食利用時の補助</div></div></li>
+            <li class="flex gap-2.5"><span class="text-mi text-[10px] mt-1.5" style="color:#3a9d62">●</span><div><b class="font-jp text-[13px] text-dk">スポーツ観戦チケット配布</b><div class="text-[11px] text-gray-500 leading-relaxed">希望者へ不定期に配布</div></div></li>
+            <li class="flex gap-2.5"><span class="text-mi text-[10px] mt-1.5" style="color:#3a9d62">●</span><div><b class="font-jp text-[13px] text-dk">お友達紹介制度</b><div class="text-[11px] text-gray-500 leading-relaxed">紹介採用時に手当を支給</div></div></li>
+            <li class="flex gap-2.5"><span class="text-mi text-[10px] mt-1.5" style="color:#3a9d62">●</span><div><b class="font-jp text-[13px] text-dk">社会保険完備・制服貸与</b><div class="text-[11px] text-gray-500 leading-relaxed">健康・厚生・雇用・労災の4保険</div></div></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footnote -->
+    <div class="rv mt-12 text-center">
+      <p class="text-[12px] text-gray-500">※福利厚生はEFILaグループ全体の制度。一部対象職種・事業所が限定される場合があります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INCOME MODEL ══ -->
+<section class="py-32 relative overflow-hidden" style="background:linear-gradient(135deg,#FFF8FC 0%,#F4EFFC 35%,#E8F8F5 70%,#FFF0F6 100%)">
+  <!-- Vibrant decorative blurs -->
+  <div class="absolute top-20 -left-32 w-[480px] h-[480px] rounded-full bg-pk/[.18] blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-20 -right-32 w-[520px] h-[520px] rounded-full bg-pu/[.18] blur-3xl pointer-events-none"></div>
+  <div class="absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full bg-or/[.08] blur-3xl pointer-events-none"></div>
+  <!-- Floating ¥ symbols -->
+  <div class="absolute top-32 right-[8%] font-en font-black text-pk/[.06] pointer-events-none select-none" style="font-size:200px;line-height:1">¥</div>
+  <div class="absolute bottom-32 left-[8%] font-en font-black text-pu/[.06] pointer-events-none select-none" style="font-size:160px;line-height:1">¥</div>
+
+  <div class="max-w-[1240px] mx-auto px-12 ctr-pad relative z-10">
+    <!-- Asymmetric header -->
+    <div class="grid lg:grid-cols-[1fr_1fr] items-end gap-10 lg:gap-16 mb-20">
+      <div>
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-5">Income Model</span>
+        <h2 class="rv d1 font-jp font-black leading-[1.1] tracking-tight text-dk" style="font-size:clamp(28px,4.2vw,58px)">
+          <span class="block whitespace-nowrap">あなたの頑張りが、</span>
+          <span class="block whitespace-nowrap">そのまま<span class="gtxt-warm">収入</span>に。</span>
+        </h2>
+      </div>
+      <div class="lg:pb-4">
+        <div class="w-12 h-1 bg-gradient-to-r from-pk to-or rounded-full mb-5 rv d2"></div>
+        <p class="rv d2 text-[15px] leading-[1.88] text-gray-600 font-light">
+          <b class="text-dk">月給 + インセンティブ + 各種手当。</b><br>
+          マカロンの給与は、あなたの努力を<br>
+          「正しく」報いる仕組みです。
+        </p>
+      </div>
+    </div>
+
+    <!-- Real income examples -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-14">
+      <!-- Therapist model -->
+      <div class="rv group relative">
+        <div class="absolute -inset-3 bg-gradient-to-br from-pu via-te to-pu rounded-[40px] opacity-30 group-hover:opacity-60 blur-2xl transition-all duration-700 -z-10"></div>
+        <div class="relative bg-white rounded-4xl p-9 lg:p-11 shadow-2xl shadow-pu/10 group-hover:-translate-y-2 transition-transform duration-500 overflow-hidden">
+          <div class="absolute -bottom-10 -right-6 font-en font-black leading-none text-pu/[.05]" style="font-size:240px">01</div>
+          <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-pu via-te to-mi"></div>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="font-en text-[10px] font-bold tracking-widest text-te uppercase px-3 py-1.5 rounded-full bg-te/15 border border-te/20">PT / OT / ST</span>
+          <span class="font-en text-[10px] font-semibold text-gray-400 tracking-wider">Therapist Model</span>
+        </div>
+        <div class="font-jp text-2xl font-bold text-dk mb-3">療法士・月100時間訪問</div>
+        <div class="text-[13px] text-gray-600 leading-[1.85] mb-8">
+          9:00出勤 → <b class="text-dk">5件訪問</b> → 18:00退勤<br>
+          土日祝なし / Base + インセンティブ 4,000円×30h=12万円
+        </div>
+        <!-- Salary callout -->
+        <div class="relative bg-gradient-to-br from-pu-bg to-te-bg rounded-3xl p-7 border border-pu/15 overflow-hidden">
+          <div class="absolute -top-6 -right-6 w-32 h-32 rounded-full bg-gradient-to-br from-pu/40 to-te/30 blur-2xl"></div>
+          <div class="relative">
+            <div class="flex items-baseline justify-between mb-3">
+              <span class="font-en text-[10px] tracking-[.25em] text-gray-500 font-bold">MONTHLY SALARY</span>
+              <span class="font-jp text-[11px] text-gray-500 font-bold">月給</span>
+            </div>
+            <div class="flex items-baseline gap-1">
+              <span class="font-en font-black gtxt-prim leading-none" style="font-size:clamp(48px,6.5vw,88px)">432,680</span>
+              <span class="font-en font-black text-pu" style="font-size:clamp(20px,2.5vw,32px)">円</span>
+            </div>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="h-px flex-1 bg-pu/20"></div>
+              <span class="font-en text-[10px] tracking-widest text-pu font-bold">+ ¥120,000 INCENTIVE</span>
+              <div class="h-px flex-1 bg-pu/20"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <!-- Nurse model -->
+      <div class="rv d1 group relative">
+        <div class="absolute -inset-3 bg-gradient-to-br from-pk via-or to-ye rounded-[40px] opacity-30 group-hover:opacity-60 blur-2xl transition-all duration-700 -z-10"></div>
+        <div class="relative bg-white rounded-4xl p-9 lg:p-11 shadow-2xl shadow-pk/10 group-hover:-translate-y-2 transition-transform duration-500 overflow-hidden">
+          <div class="absolute -bottom-10 -right-6 font-en font-black leading-none text-pk/[.05]" style="font-size:240px">02</div>
+          <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-pk via-or to-ye"></div>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="font-en text-[10px] font-bold tracking-widest text-pk uppercase px-3 py-1.5 rounded-full bg-pk/15 border border-pk/20">NURSE</span>
+          <span class="font-en text-[10px] font-semibold text-gray-400 tracking-wider">Nurse Model</span>
+        </div>
+        <div class="font-jp text-2xl font-bold text-dk mb-3">看護師・月120時間訪問</div>
+        <div class="text-[13px] text-gray-600 leading-[1.85] mb-8">
+          9:00出勤 → <b class="text-dk">6件訪問</b> → 18:00退勤<br>
+          オンコール5回 + 土日祝1回 / Base + インセンティブ20万 + 各種手当
+        </div>
+        <div class="relative bg-gradient-to-br from-pk-bg to-[#FFF3EB] rounded-3xl p-7 border border-pk/15 overflow-hidden">
+          <div class="absolute -top-6 -right-6 w-32 h-32 rounded-full bg-gradient-to-br from-pk/40 to-or/30 blur-2xl"></div>
+          <div class="relative">
+            <div class="flex items-baseline justify-between mb-3">
+              <span class="font-en text-[10px] tracking-[.25em] text-gray-500 font-bold">MONTHLY SALARY</span>
+              <span class="font-jp text-[11px] text-gray-500 font-bold">月給</span>
+            </div>
+            <div class="flex items-baseline gap-1">
+              <span class="font-en font-black gtxt-warm leading-none" style="font-size:clamp(48px,6.5vw,88px)">572,100</span>
+              <span class="font-en font-black text-pk" style="font-size:clamp(20px,2.5vw,32px)">円</span>
+            </div>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="h-px flex-1 bg-pk/20"></div>
+              <span class="font-en text-[10px] tracking-widest text-pk font-bold">+ ¥240,000 BONUS</span>
+              <div class="h-px flex-1 bg-pk/20"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salary structure -->
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="rv bg-white rounded-3xl p-7 shadow-lg shadow-pk/10 border-t-4 border-pk hover:-translate-y-1 transition-transform duration-300">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-10 h-10 rounded-full bg-gradient-to-br from-pk to-or flex items-center justify-center text-white font-en text-sm font-black shadow-lg shadow-pk/30">1</span>
+          <span class="font-en text-[10px] tracking-widest text-pk uppercase font-bold">Base Salary</span>
+        </div>
+        <div class="font-jp font-bold text-dk text-lg mb-3">月給</div>
+        <div class="text-[12px] text-gray-600 leading-[1.85] space-y-1">
+          <div>看護師 <b class="text-dk text-base">376,500円〜</b></div>
+          <div>PT/OT/ST <b class="text-dk text-base">357,080円〜</b></div>
+          <div class="text-[10px] text-gray-400 mt-2">基本給 215,600円 + 資格手当</div>
+        </div>
+      </div>
+      <div class="rv d1 bg-white rounded-3xl p-7 shadow-lg shadow-te/10 border-t-4 border-te hover:-translate-y-1 transition-transform duration-300">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-10 h-10 rounded-full bg-gradient-to-br from-te to-mi flex items-center justify-center text-white font-en text-sm font-black shadow-lg shadow-te/30">2</span>
+          <span class="font-en text-[10px] tracking-widest text-te uppercase font-bold">Incentives</span>
+        </div>
+        <div class="font-jp font-bold text-dk text-lg mb-3">成果給</div>
+        <div class="text-[12px] text-gray-600 leading-[1.85]">
+          月間訪問70hを超えた分<br>
+          <span class="font-en font-black text-te" style="font-size:24px">¥4,000</span><span class="text-dk font-bold"> / 1時間</span><br>
+          <span class="text-[10px] text-gray-400 mt-1 inline-block">頑張った分だけ、しっかり還元</span>
+        </div>
+      </div>
+      <div class="rv d2 bg-white rounded-3xl p-7 shadow-lg shadow-pu/10 border-t-4 border-pu hover:-translate-y-1 transition-transform duration-300">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-10 h-10 rounded-full bg-gradient-to-br from-pu to-pk flex items-center justify-center text-white font-en text-sm font-black shadow-lg shadow-pu/30">3</span>
+          <span class="font-en text-[10px] tracking-widest text-pu uppercase font-bold">Allowances</span>
+        </div>
+        <div class="font-jp font-bold text-dk text-lg mb-3">各種手当</div>
+        <div class="text-[12px] text-gray-600 leading-[1.85] space-y-1">
+          <div>オンコール <b class="text-dk">1日 1,000〜10,000円+</b></div>
+          <div>休日手当 <b class="text-dk">1時間 4,000円</b></div>
+          <div class="text-[10px] text-gray-400 mt-2">役職・資格・メンター・SV手当も</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STAFF VOICE ══ -->
+<section class="py-32 relative overflow-hidden" id="voice" style="background:linear-gradient(135deg,#FFFFFF 0%,#FFF0F6 50%,#F4EFFC 100%)">
+  <!-- Decorative blurs -->
+  <div class="absolute top-20 left-[10%] w-[400px] h-[400px] rounded-full bg-pk/[.08] blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-20 right-[10%] w-[400px] h-[400px] rounded-full bg-te/[.08] blur-3xl pointer-events-none"></div>
+  <!-- Floating quote mark -->
+  <div class="absolute top-24 right-[6%] font-en font-black text-pk/[.06] pointer-events-none select-none leading-none" style="font-size:280px">"</div>
+
+  <div class="max-w-[1240px] mx-auto px-12 ctr-pad relative z-10">
+    <!-- Asymmetric header -->
+    <div class="grid lg:grid-cols-[1fr_1fr] items-end gap-10 lg:gap-16 mb-20">
+      <div>
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-5">Staff Voice</span>
+        <h2 class="rv d1 font-jp font-black leading-[1.1] tracking-tight text-dk" style="font-size:clamp(28px,4.2vw,58px)">
+          <span class="block whitespace-nowrap">リアルな声で語る、</span>
+          <span class="block whitespace-nowrap"><span class="gtxt-prim">マカロン</span>。</span>
+        </h2>
+      </div>
+      <div class="lg:pb-4">
+        <div class="w-12 h-1 bg-gradient-to-r from-pk to-te rounded-full mb-5 rv d2"></div>
+        <p class="rv d2 text-[15px] leading-[1.88] text-gray-600 font-light">
+          病院からの転職、産休からの復帰、<br>
+          スピード昇格...<br>
+          <b class="text-dk">先輩たちの本音</b>を聞いてください。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voice cards — auto-scrolling marquee -->
+  <div class="overflow-hidden">
+    <div class="voice-track">
+
+      <!-- Card 1 -->
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-pk/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pk/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pk to-or"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-pk/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-pk to-or rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/04/SS_00.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-talk.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-pk mb-1.5 uppercase px-2 py-0.5 rounded-full bg-pk/10 inline-block">Nurse / 3 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">A.Kさん・30代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium relative z-10">病院からの転職で不安でしたが、先輩のサポートが手厚く<b class="text-pk">3ヶ月で自信</b>がつきました。今では後輩指導も楽しんでいます。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-te/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-te/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-te to-mi"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-te/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-te to-mi rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/04/YS_00.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-staff.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-te mb-1.5 uppercase px-2 py-0.5 rounded-full bg-te/10 inline-block">PT / 2 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">T.Mさん・20代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">病院と違い患者さんの生活に深く関われるのが魅力。多拠点だから<b class="text-te">多様なケース</b>を経験でき、専門性が急速に上がりました。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-pu/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pu/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pu to-pk"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-pu/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-pu to-pk rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/02/YI_00-1.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-family.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-pu mb-1.5 uppercase px-2 py-0.5 rounded-full bg-pu/10 inline-block">Manager / 4 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">Y.Sさん・40代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">入社<b class="text-pu">2年でリーダー、3年で管理者</b>に。急拡大中の組織だからこそのスピード。やる気次第で誰でも活躍できます。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-or/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-or/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-or to-ye"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-or/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-or to-ye rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/02/SI_00-1.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-elderly.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-or mb-1.5 uppercase px-2 py-0.5 rounded-full bg-or/10 inline-block">OT / 1.5 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">H.Nさん・20代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">育休から復帰して<b class="text-or">時短勤務中</b>ですが、とても働きやすい環境です。チームが自然にカバーし合ってくれます。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duplicate for seamless loop -->
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-pk/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pk/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pk to-or"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-pk/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-pk to-or rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/04/SS_00.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-talk.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-pk mb-1.5 uppercase px-2 py-0.5 rounded-full bg-pk/10 inline-block">Nurse / 3 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">A.Kさん・30代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">病院からの転職で不安でしたが、先輩のサポートが手厚く<b class="text-pk">3ヶ月で自信</b>がつきました。今では後輩指導も楽しんでいます。</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-te/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-te/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-te to-mi"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-te/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-te to-mi rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/04/YS_00.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-staff.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-te mb-1.5 uppercase px-2 py-0.5 rounded-full bg-te/10 inline-block">PT / 2 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">T.Mさん・20代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">病院と違い患者さんの生活に深く関われるのが魅力。多拠点だから<b class="text-te">多様なケース</b>を経験でき、専門性が急速に上がりました。</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-pu/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pu/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pu to-pk"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-pu/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-pu to-pk rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/02/YI_00-1.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-family.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-pu mb-1.5 uppercase px-2 py-0.5 rounded-full bg-pu/10 inline-block">Manager / 4 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">Y.Sさん・40代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">入社<b class="text-pu">2年でリーダー、3年で管理者</b>に。急拡大中の組織だからこそのスピード。やる気次第で誰でも活躍できます。</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-[360px] flex-shrink-0 group">
+        <div class="bg-white rounded-4xl p-8 shadow-xl shadow-or/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-or/20 transition-all duration-500 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-or to-ye"></div>
+          <div class="absolute -top-6 -right-2 font-en font-black text-or/[.08] leading-none" style="font-size:140px">"</div>
+          <div class="relative">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="relative shrink-0">
+                <div class="absolute -inset-1.5 bg-gradient-to-br from-or to-ye rounded-full opacity-30 blur"></div>
+                <img class="relative w-[68px] h-[68px] rounded-full object-cover border-[3px] border-white" style="object-position:top center" src="https://efila.co.jp/recruit_top/wp-content/uploads/2026/02/SI_00-1.jpg" alt="" onerror="this.src='https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-elderly.png'">
+              </div>
+              <div class="flex-1">
+                <div class="font-en text-[10px] font-bold tracking-widest text-or mb-1.5 uppercase px-2 py-0.5 rounded-full bg-or/10 inline-block">OT / 1.5 Years</div>
+                <div class="font-jp font-bold text-[15px] text-dk">H.Nさん・20代</div>
+              </div>
+            </div>
+            <p class="text-[14px] leading-[1.85] text-gray-700 font-medium">育休から復帰して<b class="text-or">時短勤務中</b>ですが、とても働きやすい環境です。チームが自然にカバーし合ってくれます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LOCATIONS ══ -->
+<section class="py-28 bg-white" id="locations">
+  <div class="max-w-[1200px] mx-auto px-12 ctr-pad">
+    <div class="grid lg:grid-cols-[380px_1fr] gap-14 items-start">
+      <div class="lg:sticky lg:top-24">
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-4">Locations</span>
+        <h2 class="rv d1 font-jp font-black leading-[1.18] tracking-tight text-dk" style="font-size:clamp(30px,4.2vw,54px)">神奈川県内<br>全25拠点展開中</h2>
+        <p class="rv d2 text-[15px] leading-[1.88] text-gray-500 font-light mt-4">横浜・川崎・相模原・平塚・横須賀・愛甲郡など神奈川県全域をカバー。あなたの生活圏で地域を支えられます。</p>
+        <div class="rv d3 grid grid-cols-2 border border-gray-200 rounded-4xl overflow-hidden mt-7">
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">和田町</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">青葉台</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">日吉</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">鴨居</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">新子安</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">瀬谷</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">上大岡</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">戸塚</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">根岸</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">洋光台</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">KAWASAKI</div><div class="font-jp font-bold text-sm">溝の口</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">KAWASAKI</div><div class="font-jp font-bold text-sm">元住吉</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">KAWASAKI</div><div class="font-jp font-bold text-sm">東門前</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">KAWASAKI</div><div class="font-jp font-bold text-sm">川崎</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">FUJISAWA</div><div class="font-jp font-bold text-sm">長後</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">SAGAMIHARA</div><div class="font-jp font-bold text-sm">淵野辺</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">HIRATSUKA</div><div class="font-jp font-bold text-sm">平塚</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">AIKOU</div><div class="font-jp font-bold text-sm">愛川</div></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOHAMA</div><div class="font-jp font-bold text-sm">新横浜</div></div>
+          <div class="px-4 py-2.5 border-b border-gray-200" style="border-left:2px solid #FF2D78"><div class="font-en text-[9px] font-bold tracking-wider text-pk uppercase">YOKOSUKA</div><div class="font-jp font-bold text-sm">追浜</div><span class="inline-block font-en text-[8px] font-bold text-pk bg-pk/10 px-1.5 py-0.5 rounded mt-1 tracking-wider">5月 New Open</span></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200 opacity-50"><div class="font-en text-[9px] font-bold tracking-wider text-gray-500 uppercase">FUJISAWA</div><div class="font-jp font-bold text-sm">藤沢</div><span class="inline-block font-en text-[8px] font-bold text-yellow-700 bg-ye/20 px-1.5 py-0.5 rounded mt-1 tracking-wider">Coming Soon</span></div>
+          <div class="px-4 py-2.5 border-b border-gray-200 opacity-50"><div class="font-en text-[9px] font-bold tracking-wider text-gray-500 uppercase">HADANO</div><div class="font-jp font-bold text-sm">秦野</div><span class="inline-block font-en text-[8px] font-bold text-yellow-700 bg-ye/20 px-1.5 py-0.5 rounded mt-1 tracking-wider">Coming Soon</span></div>
+          <div class="px-4 py-2.5 border-r border-b border-gray-200 opacity-50"><div class="font-en text-[9px] font-bold tracking-wider text-gray-500 uppercase">ODAWARA</div><div class="font-jp font-bold text-sm">小田原</div><span class="inline-block font-en text-[8px] font-bold text-yellow-700 bg-ye/20 px-1.5 py-0.5 rounded mt-1 tracking-wider">Coming Soon</span></div>
+          <div class="px-4 py-2.5 border-b border-gray-200 opacity-50"><div class="font-en text-[9px] font-bold tracking-wider text-gray-500 uppercase">YOKOSUKA</div><div class="font-jp font-bold text-sm">北久里浜</div><span class="inline-block font-en text-[8px] font-bold text-yellow-700 bg-ye/20 px-1.5 py-0.5 rounded mt-1 tracking-wider">Coming Soon</span></div>
+          <div class="px-4 py-2.5 border-r border-gray-200 opacity-50 col-span-2"><div class="font-en text-[9px] font-bold tracking-wider text-gray-500 uppercase">KAWASAKI</div><div class="font-jp font-bold text-sm">新百合ヶ丘</div><span class="inline-block font-en text-[8px] font-bold text-yellow-700 bg-ye/20 px-1.5 py-0.5 rounded mt-1 tracking-wider">Coming Soon</span></div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FLOW ══ -->
+<section class="py-28 bg-gradient-to-br from-[#FFF0F8] via-[#F0FCFF] to-[#F5F0FF]" id="flow">
+  <div class="max-w-[1200px] mx-auto px-12 ctr-pad">
+    <div class="text-center mb-20">
+      <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pk mb-4">How to Apply</span>
+      <h2 class="rv d1 font-jp font-black leading-[1.18] tracking-tight text-dk" style="font-size:clamp(30px,4.2vw,54px)">応募から入社までの流れ</h2>
+    </div>
+    <div class="flow-grid grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
+      <div class="rv text-center px-4 group">
+        <div class="w-[76px] h-[76px] rounded-full bg-white border-[3px] border-pk flex items-center justify-center mx-auto mb-5 relative z-[1] shadow-lg group-hover:-translate-y-1 group-hover:scale-105 transition-transform"><div class="font-en text-[22px] font-black text-pk">1</div></div>
+        <div class="font-jp font-bold text-[15px] mb-2">エントリー</div>
+        <div class="text-xs text-gray-500 leading-[1.65] font-light">フォームまたはお電話でお気軽にご連絡ください</div>
+      </div>
+      <div class="rv d1 text-center px-4 group">
+        <div class="w-[76px] h-[76px] rounded-full bg-white border-[3px] border-te flex items-center justify-center mx-auto mb-5 relative z-[1] shadow-lg group-hover:-translate-y-1 group-hover:scale-105 transition-transform"><div class="font-en text-[22px] font-black text-te">2</div></div>
+        <div class="font-jp font-bold text-[15px] mb-2">面接</div>
+        <div class="text-xs text-gray-500 leading-[1.65] font-light">WEB面接対応可。対面面接も歓迎。職場見学もOK</div>
+        <span class="inline-block mt-2 font-en text-[9px] font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-te/15 text-te">WEB面接対応</span>
+      </div>
+      <div class="rv d2 text-center px-4 group">
+        <div class="w-[76px] h-[76px] rounded-full bg-white border-[3px] border-pu flex items-center justify-center mx-auto mb-5 relative z-[1] shadow-lg group-hover:-translate-y-1 group-hover:scale-105 transition-transform"><div class="font-en text-[22px] font-black text-pu">3</div></div>
+        <div class="font-jp font-bold text-[15px] mb-2">内定・条件確認</div>
+        <div class="text-xs text-gray-500 leading-[1.65] font-light">入社日・待遇を確認のうえご連絡いたします</div>
+      </div>
+      <div class="rv d3 text-center px-4 group">
+        <div class="w-[76px] h-[76px] rounded-full bg-white border-[3px] border-or flex items-center justify-center mx-auto mb-5 relative z-[1] shadow-lg group-hover:-translate-y-1 group-hover:scale-105 transition-transform"><div class="font-en text-[22px] font-black text-or">4</div></div>
+        <div class="font-jp font-bold text-[15px] mb-2">入社</div>
+        <div class="text-xs text-gray-500 leading-[1.65] font-light">充実の研修で安心してスタートできます</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WORK STYLES ══ -->
+<section class="py-32 bg-white relative overflow-hidden">
+  <!-- Decorative blurs & floating text -->
+  <div class="absolute -top-32 -left-32 w-[480px] h-[480px] rounded-full bg-pu/[.05] blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-32 w-[520px] h-[520px] rounded-full bg-pk/[.05] blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-12 left-0 right-0 overflow-hidden pointer-events-none opacity-[.04]">
+    <div class="hmq-inner tr whitespace-nowrap" style="animation:hmr 36s linear infinite">
+      <span class="font-en font-black tracking-tight" style="font-size:clamp(80px,10vw,140px);line-height:1">LIFE STAGE · WORK STYLE · LIFE STAGE · WORK STYLE · LIFE STAGE · </span>
+    </div>
+  </div>
+
+  <div class="max-w-[1240px] mx-auto px-12 ctr-pad relative">
+    <!-- Asymmetric header -->
+    <div class="grid lg:grid-cols-[1fr_1fr] items-end gap-10 lg:gap-16 mb-20">
+      <div>
+        <span class="rv inline-block font-en text-[10px] font-bold tracking-[.28em] uppercase text-pu mb-5">Work Styles</span>
+        <h2 class="rv d1 font-jp font-black leading-[1.1] tracking-tight text-dk" style="font-size:clamp(26px,3.8vw,52px)">
+          <span class="block whitespace-nowrap">ライフステージで選べる、</span>
+          <span class="block whitespace-nowrap"><span class="gtxt-prim">5つの道</span>。</span>
+        </h2>
+      </div>
+      <div class="lg:pb-4">
+        <div class="w-12 h-1 bg-gradient-to-r from-pu to-pk rounded-full mb-5 rv d2"></div>
+        <p class="rv d2 text-[15px] leading-[1.88] text-gray-600 font-light">
+          基本勤務時間 <b class="text-dk">9:00〜18:00</b>（1ヶ月単位の変形労働時間制）<br>
+          結婚・出産・介護...<br>
+          <b class="text-dk">あなたの人生のリズム</b>に合わせて、長く働ける環境です。
+        </p>
+      </div>
+    </div>
+
+    <!-- Work style cards — vertical with gradient ribbons -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+
+      <!-- 01 平日社員 -->
+      <div class="rv group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-pk to-or rounded-[32px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10"></div>
+        <div class="relative bg-white rounded-[28px] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+          <!-- Gradient header with floating number -->
+          <div class="relative h-40 bg-gradient-to-br from-pk to-or overflow-hidden flex items-center justify-center">
+            <div class="absolute -top-4 -right-2 font-en font-black text-white/20 leading-none" style="font-size:120px">01</div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,.3),transparent_60%)]"></div>
+            <div class="relative text-center">
+              <div class="font-en text-[10px] font-bold tracking-[.3em] text-white/70 uppercase">Style 01</div>
+              <div class="font-jp text-[22px] font-black text-white mt-1">平日社員</div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="font-jp font-bold text-[16px] text-dk leading-snug mb-2">土日祝はお休み</div>
+            <div class="text-[12px] text-gray-500 leading-[1.78] flex-1">プライベートと両立、安定したリズムで働きたい方に。</div>
+            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="font-en text-[10px] font-bold text-pk tracking-widest">REGULAR</span>
+              <svg class="w-4 h-4 text-pk group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 土日社員 -->
+      <div class="rv d1 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-pu to-pk rounded-[32px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10"></div>
+        <div class="relative bg-white rounded-[28px] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+          <div class="relative h-40 bg-gradient-to-br from-pu to-pk overflow-hidden flex items-center justify-center">
+            <div class="absolute -top-4 -right-2 font-en font-black text-white/20 leading-none" style="font-size:120px">02</div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,.3),transparent_60%)]"></div>
+            <div class="relative text-center">
+              <div class="font-en text-[10px] font-bold tracking-[.3em] text-white/70 uppercase">Style 02</div>
+              <div class="font-jp text-[22px] font-black text-white mt-1">土日社員</div>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="font-jp font-bold text-[16px] text-dk leading-snug mb-2">土日祝必須<br>平日3日休み</div>
+            <div class="text-[12px] text-gray-500 leading-[1.78] flex-1">平日に病院・役所など、自分時間を確保したい方に。</div>
+            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="font-en text-[10px] font-bold text-pu tracking-widest">WEEKEND</span>
+              <svg class="w-4 h-4 text-pu group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 シフト社員 -->
+      <div class="rv d2 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-te to-mi rounded-[32px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10"></div>
+        <div class="relative bg-white rounded-[28px] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+          <div class="relative h-40 bg-gradient-to-br from-te to-mi overflow-hidden flex items-center justify-center">
+            <div class="absolute -top-4 -right-2 font-en font-black text-white/20 leading-none" style="font-size:120px">03</div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,.3),transparent_60%)]"></div>
+            <div class="relative text-center">
+              <div class="font-en text-[10px] font-bold tracking-[.3em] text-white/70 uppercase">Style 03</div>
+              <div class="font-jp text-[22px] font-black text-white mt-1">シフト社員</div>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="font-jp font-bold text-[16px] text-dk leading-snug mb-2">平日4日<br>+土日のうち1日</div>
+            <div class="text-[12px] text-gray-500 leading-[1.78] flex-1">柔軟な勤務日で、プライベートと仕事のバランスを最適化。</div>
+            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="font-en text-[10px] font-bold text-te tracking-widest">FLEXIBLE</span>
+              <svg class="w-4 h-4 text-te group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 時短社員 -->
+      <div class="rv d3 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-ye to-or rounded-[32px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10"></div>
+        <div class="relative bg-white rounded-[28px] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+          <div class="relative h-40 bg-gradient-to-br from-ye to-or overflow-hidden flex items-center justify-center">
+            <div class="absolute -top-4 -right-2 font-en font-black text-white/30 leading-none" style="font-size:120px">04</div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,.3),transparent_60%)]"></div>
+            <div class="relative text-center">
+              <div class="font-en text-[10px] font-bold tracking-[.3em] text-white/80 uppercase">Style 04</div>
+              <div class="font-jp text-[22px] font-black text-white mt-1">時短社員</div>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="font-jp font-bold text-[16px] text-dk leading-snug mb-2">週32時間勤務</div>
+            <div class="text-[12px] text-gray-500 leading-[1.78] flex-1">育児・介護と仕事を両立。家族との時間を大切に。</div>
+            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="font-en text-[10px] font-bold text-or tracking-widest">SHORT-HRS</span>
+              <svg class="w-4 h-4 text-or group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 パート -->
+      <div class="rv d4 group relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-pk via-or to-ye rounded-[32px] opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10"></div>
+        <div class="relative bg-white rounded-[28px] overflow-hidden shadow-md group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500 h-full flex flex-col">
+          <div class="relative h-40 bg-gradient-to-br from-pk via-or to-ye overflow-hidden flex items-center justify-center">
+            <div class="absolute -top-4 -right-2 font-en font-black text-white/20 leading-none" style="font-size:120px">05</div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,.3),transparent_60%)]"></div>
+            <div class="relative text-center">
+              <div class="font-en text-[10px] font-bold tracking-[.3em] text-white/70 uppercase">Style 05</div>
+              <div class="font-jp text-[22px] font-black text-white mt-1">パート</div>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="font-jp font-bold text-[16px] text-dk leading-snug mb-2"><span class="gtxt-warm">¥4,000</span> / 1件1h</div>
+            <div class="text-[12px] text-gray-500 leading-[1.78] flex-1">空いた時間で確実に収入を。スキマ時間を活かしたい方に。</div>
+            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="font-en text-[10px] font-bold text-pk tracking-widest">PART-TIME</span>
+              <svg class="w-4 h-4 text-pk group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ 会社説明会 BANNER ══ -->
+<section class="relative overflow-hidden py-20 lg:py-24 px-6 sm:px-12 ctr-pad" style="background:linear-gradient(135deg,#FF2D78 0%,#FF6B2B 25%,#8B5CF6 60%,#00B8AE 100%)">
+  <!-- Animated gradient blurs -->
+  <div class="absolute -top-32 -left-20 w-[500px] h-[500px] rounded-full bg-ye/30 blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-32 -right-20 w-[600px] h-[600px] rounded-full bg-pk/40 blur-3xl pointer-events-none"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-pu/30 blur-3xl pointer-events-none"></div>
+
+  <!-- Floating MACARON marquee -->
+  <div class="absolute top-0 bottom-0 left-0 right-0 overflow-hidden pointer-events-none opacity-[.07] flex items-center">
+    <div class="hmq-inner tl whitespace-nowrap" style="animation:hml 28s linear infinite">
+      <span class="font-en font-black tracking-tight text-white" style="font-size:clamp(80px,11vw,160px);line-height:1">INFO SESSION · ENTRY · INFO SESSION · ENTRY · INFO SESSION · ENTRY · </span>
+    </div>
+  </div>
+
+  <!-- Decorative dots pattern (top-right) -->
+  <div class="absolute top-8 right-8 lg:top-12 lg:right-12 hidden md:block pointer-events-none">
+    <div class="grid grid-cols-6 gap-2 opacity-30">
+      <div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+      <div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+      <div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div><div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+    </div>
+  </div>
+
+  <div class="relative max-w-[1100px] mx-auto z-10">
+    <div class="grid lg:grid-cols-[1fr_auto] items-center gap-10 lg:gap-16">
+      <div class="text-center lg:text-left">
+        <!-- Live badge -->
+        <div class="inline-flex items-center gap-2 mb-5 bg-white/15 backdrop-blur border border-white/30 rounded-full px-4 py-1.5">
+          <span class="relative flex w-2 h-2">
+            <span class="animate-ping absolute inline-flex w-full h-full rounded-full bg-ye opacity-75"></span>
+            <span class="relative inline-flex w-2 h-2 rounded-full bg-ye"></span>
+          </span>
+          <span class="font-en text-[10px] font-bold tracking-[.25em] text-white uppercase">Now Open · 随時開催中</span>
+        </div>
+
+        <!-- Title with mixed sizes -->
+        <h2 class="font-jp font-black text-white leading-[.95] tracking-tight mb-5" style="font-size:clamp(38px,6.5vw,84px)">
+          <span class="block">会社</span>
+          <span class="block flex items-baseline gap-3 justify-center lg:justify-start flex-wrap">
+            <span>説明会</span>
+            <span class="font-en text-white/70 tracking-tight" style="font-size:clamp(20px,2.5vw,32px);font-weight:700">INFO SESSION</span>
+          </span>
+        </h2>
+
+        <p class="text-[15px] lg:text-base text-white/90 leading-[1.85] max-w-xl mx-auto lg:mx-0 mb-2">
+          マカロン訪問看護・<b>EFILaグループ</b>について詳しくご紹介。<br>
+          初めての方も安心してご参加ください。
+        </p>
+        <p class="font-en text-[11px] text-white/65 tracking-widest font-bold">ONLINE · OFFLINE · 30分〜1時間程度</p>
+      </div>
+
+      <!-- CTA button -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6vwTzlf_JkkavIak4MEFpzPgeH_DolZy-QED9IW05cshobA/viewform" target="_blank" rel="noopener" class="group relative inline-flex flex-shrink-0 mx-auto lg:mx-0">
+        <!-- Pulsing glow -->
+        <div class="absolute -inset-3 bg-white rounded-pill opacity-30 blur-xl group-hover:opacity-60 transition-opacity duration-500"></div>
+        <span class="relative bg-white text-pk px-10 py-5 rounded-pill font-jp font-black text-[16px] tracking-wide shadow-2xl flex items-center gap-3 group-hover:-translate-y-1 group-hover:gap-4 transition-all whitespace-nowrap">
+          <span>説明会に参加する</span>
+          <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA / ENTRY ══ -->
+<section class="relative overflow-hidden min-h-[580px] flex items-center" id="entry">
+  <div class="absolute inset-0 z-0">
+    <video class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto">
+      <source src="macaron-hero.mp4" type="video/mp4">
+      <source src="../OneDrive/Desktop/Macaron_Frames/Town_that_leaves_202604261433.mp4" type="video/mp4">
+      <source src="../Downloads/Town_that_leaves_202604261433.mp4" type="video/mp4">
+      <img src="https://efila.co.jp/recruit_top/wp-content/themes/recruit_top/images/top/comapny-staff.png" alt="">
+    </video>
+  </div>
+  <div class="absolute inset-0 z-[1]" style="background:linear-gradient(to right,rgba(10,6,18,.92) 0%,rgba(10,6,18,.7) 50%,rgba(10,6,18,.25) 100%)"></div>
+  <div class="relative z-[2] px-6 sm:px-10 lg:px-18 py-24 max-w-[680px] ctr-pad">
+    <span class="rv block font-en text-[10px] font-bold tracking-[.3em] text-pk uppercase mb-5">Join Us</span>
+    <h2 class="rv d1 font-jp font-black text-white leading-[1.22] mb-4" style="font-size:clamp(22px,3vw,40px)">
+      <span class="block whitespace-nowrap">マカロンで、</span>
+      <span class="block whitespace-nowrap">あなたの看護を輝かせよう。</span>
+    </h2>
+    <div class="rv d2 gtxt-prim font-en font-black leading-[.9] tracking-tight mb-7" style="font-size:clamp(40px,6.5vw,84px)">JOIN MACARON</div>
+    <p class="rv d3 text-sm text-white/60 leading-[1.82] mb-9">神奈川県内No.1の訪問看護ステーションで、<br>あなたの新しい一歩を、踏み出してください。</p>
+    <div class="rv d4 flex gap-3.5 flex-wrap">
+      <a href="https://efila.co.jp/search_recruit/entry" target="_blank" rel="noopener" class="inline-flex items-center bg-gradient-to-br from-pk to-or text-white px-10 py-4 rounded-pill font-jp font-bold text-[15px] tracking-wide shadow-lg shadow-pk/40 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pk/55 transition-all">今すぐエントリーする</a>
+      <a href="https://efila.co.jp/recruit_top/" target="_blank" rel="noopener" class="inline-flex items-center border border-white/35 rounded-pill text-white/85 px-9 py-[15px] font-jp font-semibold text-sm hover:bg-white/[.08] hover:border-white/60 transition-colors">公式サイトを見る</a>
+    </div>
+    <div class="rv d5 mt-5 text-[13px] text-white/40">お電話でのお問い合わせ（平日 9:00〜18:00）<br><a href="tel:045-594-8945" class="text-white/65 font-bold">045-594-8945</a></div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="bg-dk pt-20 pb-9">
+  <div class="max-w-[1200px] mx-auto px-12 ctr-pad">
+    <div class="flex flex-col md:flex-row items-start gap-10 md:gap-16 pb-12 border-b border-white/10 mb-9">
+      <div>
+        <img src="https://macaron-kango.com/wp-content/uploads/2025/12/logo-text-makaron.png" alt="マカロン" class="h-9 brightness-0 invert mb-4" onerror="this.style.display='none'">
+        <p class="text-[13px] text-white/30 leading-[1.72]">訪問看護リハビリステーション マカロン<br>神奈川県内25拠点 / EFILaグループ</p>
+      </div>
+      <nav class="flex flex-col md:flex-row gap-7 md:gap-14 flex-1 md:justify-end">
+        <div class="flex flex-col gap-3">
+          <a href="#about" class="text-[13px] text-white/40 hover:text-white transition-colors">マカロンについて</a>
+          <a href="#reasons" class="text-[13px] text-white/40 hover:text-white transition-colors">選ばれる理由</a>
+          <a href="#benefits" class="text-[13px] text-white/40 hover:text-white transition-colors">待遇・福利厚生</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href="#voice" class="text-[13px] text-white/40 hover:text-white transition-colors">スタッフの声</a>
+          <a href="#locations" class="text-[13px] text-white/40 hover:text-white transition-colors">拠点一覧</a>
+          <a href="#flow" class="text-[13px] text-white/40 hover:text-white transition-colors">応募の流れ</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href="https://efila.co.jp/recruit_top/" target="_blank" rel="noopener" class="text-[13px] text-white/40 hover:text-white transition-colors">公式サイト</a>
+          <a href="https://efila.co.jp/" target="_blank" rel="noopener" class="text-[13px] text-white/40 hover:text-white transition-colors">EFILaグループ</a>
+          <a href="https://efila.co.jp/search_recruit/entry" target="_blank" rel="noopener" class="text-[13px] text-white/40 hover:text-white transition-colors">エントリー</a>
+        </div>
+      </nav>
+    </div>
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <span class="text-[11px] text-white/20">© 2026 マカロン訪問看護リハビリステーション / EFILa GROUP. All Rights Reserved.</span>
+      <div class="font-en text-[11px] font-bold tracking-wider text-white/20">EFILa GROUP</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Float CTA -->
+<a href="https://efila.co.jp/search_recruit/entry" target="_blank" rel="noopener" class="float-btn fixed bottom-7 right-7 z-[800] bg-gradient-to-br from-pk to-or text-white px-7 py-3.5 rounded-pill font-jp text-[13px] font-bold shadow-xl shadow-pk/45 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-pk/60 transition-all" id="floatBtn">今すぐ応募する</a>
+
+<script>
+/* ── CURSOR ── */
+const cd=document.querySelector('.cur-d'),cr=document.querySelector('.cur-r');
+let cx=0,cy=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY});
+(function loop(){rx+=(cx-rx)*.13;ry+=(cy-ry)*.13;
+  cd.style.transform=`translate(${cx}px,${cy}px)`;
+  cr.style.transform=`translate(${rx}px,${ry}px)`;
+  requestAnimationFrame(loop);})();
+
+/* ── LOADER ── */
+const ldr=document.getElementById('ldr');
+requestAnimationFrame(()=>ldr.classList.add('go'));
+setTimeout(()=>ldr.classList.add('out'),1800);
+
+/* ── HEADER SCROLL ── */
+const hd=document.getElementById('hd');
+window.addEventListener('scroll',()=>{
+  if(scrollY>40){
+    hd.style.background='rgba(10,6,18,.9)';
+    hd.style.backdropFilter='blur(24px)';
+    hd.style.padding='13px 48px';
+    hd.style.borderBottom='1px solid rgba(255,255,255,.06)';
+  }else{
+    hd.style.background='';
+    hd.style.backdropFilter='';
+    hd.style.padding='20px 48px';
+    hd.style.borderBottom='';
+  }
+  document.getElementById('floatBtn').classList.toggle('vis',scrollY>400);
+},{passive:true});
+
+/* ── SCROLL REVEAL ── */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ── COUNT UP ── */
+function countUp(el,target,dur=1600){
+  const start=performance.now();
+  function update(now){
+    const t=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-t,4);
+    el.textContent=Math.round(ease*target).toLocaleString();
+    if(t<1)requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const cio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      countUp(e.target,+e.target.dataset.t);
+      cio.unobserve(e.target);
+    }
+  });
+},{threshold:.4});
+document.querySelectorAll('.js-cnt').forEach(el=>cio.observe(el));
+
+/* ── MAP ── */
+(function(){
+  const PINK='#FF2D78', GREY='#8B5CF6';
+  function pin(c){
+    return L.divIcon({
+      html:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 44" width="28" height="38">
+        <path d="M16 0C7.163 0 0 7.163 0 16c0 10 16 28 16 28S32 26 32 16C32 7.163 24.837 0 16 0z" fill="${c}" stroke="#fff" stroke-width="2"/>
+        <circle cx="16" cy="16" r="5.5" fill="#fff"/>
+      </svg>`,
+      className:'',iconSize:[28,38],iconAnchor:[14,38],popupAnchor:[0,-38]
+    });
+  }
+  const ghost=L.divIcon({
+    html:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 44" width="22" height="30">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 10 16 28 16 28S32 26 32 16C32 7.163 24.837 0 16 0z" fill="#fff" stroke="${GREY}" stroke-width="2" stroke-dasharray="4 2" opacity=".6"/>
+      <circle cx="16" cy="16" r="4" fill="none" stroke="${GREY}" stroke-width="1.5" opacity=".6"/>
+    </svg>`,
+    className:'',iconSize:[22,30],iconAnchor:[11,30],popupAnchor:[0,-30]
+  });
+  const stations=[
+    {name:'マカロン和田町',  area:'横浜市保土ケ谷区', lat:35.4488,lng:139.5834},
+    {name:'マカロン青葉台',  area:'横浜市青葉区',     lat:35.5475,lng:139.5186},
+    {name:'マカロン日吉',    area:'横浜市港北区',     lat:35.5574,lng:139.6397},
+    {name:'マカロン鴨居',    area:'横浜市緑区',       lat:35.5143,lng:139.5701},
+    {name:'マカロン新子安',  area:'横浜市神奈川区',   lat:35.4917,lng:139.6408},
+    {name:'マカロン瀬谷',    area:'横浜市瀬谷区',     lat:35.4711,lng:139.4930},
+    {name:'マカロン上大岡',  area:'横浜市港南区',     lat:35.3935,lng:139.5991},
+    {name:'マカロン戸塚',    area:'横浜市戸塚区',     lat:35.3996,lng:139.5351},
+    {name:'マカロン根岸',    area:'横浜市磯子区',     lat:35.4099,lng:139.6399},
+    {name:'マカロン洋光台',  area:'横浜市磯子区',     lat:35.3801,lng:139.6220},
+    {name:'マカロン溝の口',  area:'川崎市高津区',     lat:35.5873,lng:139.6044},
+    {name:'マカロン元住吉',  area:'川崎市中原区',     lat:35.5748,lng:139.6619},
+    {name:'マカロン東門前',  area:'川崎市川崎区',     lat:35.5291,lng:139.7204},
+    {name:'マカロン川崎',    area:'川崎市川崎区',     lat:35.5301,lng:139.7019},
+    {name:'マカロン長後',    area:'藤沢市',           lat:35.4318,lng:139.4756},
+    {name:'マカロン淵野辺',  area:'相模原市中央区',   lat:35.5650,lng:139.3704},
+    {name:'マカロン平塚',    area:'平塚市',           lat:35.3279,lng:139.3455},
+    {name:'マカロン愛川',    area:'愛甲郡愛川町',     lat:35.5245,lng:139.3178},
+    {name:'アポロ新横浜',    area:'横浜市港北区',     lat:35.5068,lng:139.6163},
+    {name:'マカロン追浜',    area:'横須賀市',         lat:35.2850,lng:139.6632},
+  ];
+  const coming=[
+    {name:'藤沢',     area:'藤沢市',         lat:35.3363,lng:139.4912},
+    {name:'秦野',     area:'秦野市',         lat:35.3717,lng:139.2189},
+    {name:'小田原',   area:'小田原市',       lat:35.2560,lng:139.1685},
+    {name:'北久里浜', area:'横須賀市',       lat:35.2332,lng:139.7108},
+    {name:'新百合ヶ丘',area:'川崎市麻生区',  lat:35.6197,lng:139.5218},
+  ];
+  const map=L.map('map',{zoomControl:true,scrollWheelZoom:false});
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:'abcd',maxZoom:19
+  }).addTo(map);
+  stations.forEach(s=>{
+    L.marker([s.lat,s.lng],{icon:pin(PINK)}).addTo(map)
+     .bindPopup(`<div style="font-family:'Noto Sans JP',sans-serif;min-width:130px"><div style="font-size:9px;color:${PINK};font-weight:700;letter-spacing:.1em;margin-bottom:4px">MACARON</div><div style="font-size:14px;font-weight:900;color:#0A0612;margin-bottom:3px">${s.name}</div><div style="font-size:11px;color:#6B7280">${s.area}</div></div>`,{maxWidth:180});
+  });
+  coming.forEach(s=>{
+    L.marker([s.lat,s.lng],{icon:ghost}).addTo(map)
+     .bindPopup(`<div style="font-family:'Noto Sans JP',sans-serif;min-width:130px"><div style="font-size:9px;color:${GREY};font-weight:700;letter-spacing:.1em;margin-bottom:4px">COMING SOON</div><div style="font-size:14px;font-weight:900;color:#0A0612;margin-bottom:3px">マカロン${s.name}</div><div style="font-size:11px;color:#6B7280">${s.area} — オープン準備中</div></div>`,{maxWidth:180});
+  });
+  const all=stations.map(s=>[s.lat,s.lng]).concat(coming.map(s=>[s.lat,s.lng]));
+  map.fitBounds(all,{padding:[32,32]});
+})();
+</script>
+</body>
+</html>
